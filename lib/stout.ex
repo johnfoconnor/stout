@@ -60,7 +60,7 @@ defmodule Stout do
   defp log(level, format, args, caller) do
     {name, __arity} = caller.function || {:unknown, 0}
     module = caller.module || :unknown
-    if is_binary(format), do: format = String.to_char_list!(format)
+    if is_binary(format), do: format = String.to_char_list(format)
     if should_log(level) do
        dispatch(level, module, name, caller.line, format, args)
     end
