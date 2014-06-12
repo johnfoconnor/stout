@@ -4,7 +4,6 @@ defmodule Stout.Mixfile do
   def project do
     [app: :stout,
      version: "0.0.1",
-     elixir: "~> 0.14.0-dev",
      deps: deps]
   end
 
