@@ -80,7 +80,7 @@ defmodule Stout do
   defp should_log(level), do: level_to_num(level) <= level_to_num(compile_log_level)
 
   defp compile_log_level() do
-    Application.get_env(:stout, :level, :info)
+    Application.get_env(:stout, :level, :debug)
   end
 
   defp compile_truncation_size() do

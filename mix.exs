@@ -26,6 +26,9 @@ defmodule Stout.Mixfile do
   #
   # Type `mix help deps` for more examples and options
   defp deps do
-    [{:lager, github: "basho/lager"}]
+    [
+     {:conform, "~> 0.9.1"},
+     {:lager, github: "basho/lager"}
+    ]
   end
 end
