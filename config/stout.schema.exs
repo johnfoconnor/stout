@@ -1,30 +1,13 @@
-defmodule Stout.Schema do
-  def lager_levels do
-    [:debug, :info, :error]
-  end
-
-  def update_handler(conf_acc, fun) do
-    {file_backends, other} =
-      Enum.partition(conf_acc,
-                     fn([{:lager_file_backend, _}]) -> true
-                       (_) -> false
-                     end)
-      Enum.map(file_backends, fn([{:lager_file_backend, conf}]) ->
-        [lager_file_backend: fun.(conf)]
-      end)
-        |> Enum.into(other)
-  end
-end
 [
   mappings: [
     "lager.handlers.console.level": [
       to: "lager.handlers",
-      datatype: [enum: Stout.Schema.lager_levels],
+      datatype: [enum: [:debug, :info, :error]],
       default: :info
     ],
     "lager.handlers.files.level": [
       to: "lager.handlers",
-      datatype: [list: [enum: Stout.Schema.lager_levels]],
+      datatype: [list: [enum: [:debug, :info, :error]]],
       default: [
                 :error, :info, :debug
       ]
@@ -73,28 +56,48 @@ end
       end,
     "lager.handlers.files.dirname": fn
        _, dirname, conf_acc ->
-         Stout.Schema.update_handler(conf_acc, fn (conf) ->
-                                       filename = conf[:level] |> Atom.to_char_list
-                                       [{:file, dirname ++ filename ++ '.log'}] ++ conf
-                                     end)
+         fun = fn (conf) ->
+                    filename = conf[:level] |> Atom.to_char_list
+                    [{:file, dirname ++ filename ++ '.log'}] ++ conf
+               end
+         Enum.map(conf_acc,
+                  fn([{:lager_file_backend, conf}]) ->
+                      [lager_file_backend: fun.(conf)]
+                    (a) -> a
+                  end)
       end,
     "lager.handlers.files.size": fn
        _, size, conf_acc ->
-         Stout.Schema.update_handler(conf_acc, fn (conf) ->
-                                       [size: size] ++ conf
-                                     end)
+         fun = fn (conf) ->
+                    [size: size] ++ conf
+               end
+         Enum.map(conf_acc,
+                  fn([{:lager_file_backend, conf}]) ->
+                      [lager_file_backend: fun.(conf)]
+                    (a) -> a
+                  end)
       end,
     "lager.handlers.files.date": fn
        _, date, conf_acc ->
-         Stout.Schema.update_handler(conf_acc, fn (conf) ->
-                                       [date: date] ++ conf
-                                     end)
+         fun = fn (conf) ->
+                    [date: date] ++ conf
+               end
+         Enum.map(conf_acc,
+                  fn([{:lager_file_backend, conf}]) ->
+                      [lager_file_backend: fun.(conf)]
+                    (a) -> a
+                  end)
       end,
     "lager.handlers.files.count": fn
        _, count, conf_acc ->
-         Stout.Schema.update_handler(conf_acc, fn (conf) ->
-                                       [count: count] ++ conf
-                                     end)
+         fun = fn (conf) ->
+                    [count: count] ++ conf
+               end
+         Enum.map(conf_acc,
+                  fn([{:lager_file_backend, conf}]) ->
+                      [lager_file_backend: fun.(conf)]
+                    (a) -> a
+                  end)
       end
   ]
 ]
