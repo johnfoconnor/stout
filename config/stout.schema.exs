@@ -1,5 +1,10 @@
 [
   mappings: [
+    "lager.lager_truncation_size": [
+      to: "lager.lager_truncation_size",
+      datatype: :integer,
+      default: 8192
+    ],
     "lager.handlers.console.level": [
       to: "lager.handlers",
       datatype: [enum: [:debug, :info, :error]],
@@ -42,7 +47,7 @@
       doc: "Provide documentation for stout.truncation_size here.",
       to: "stout.truncation_size",
       datatype: :integer,
-      default: 4096
+      default: 8192
     ]
   ],
   translations: [
