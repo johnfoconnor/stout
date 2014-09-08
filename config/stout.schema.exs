@@ -57,7 +57,7 @@
       end,
     "lager.handlers.files.level": fn
        _, levels, conf_acc ->
-         conf_acc ++ Enum.map(levels, &([lager_file_backend: [level: &1]]))
+         conf_acc ++ Enum.map(levels, &({:lager_file_backend, [level: &1]}))
       end,
     "lager.handlers.files.dirname": fn
        _, dirname, conf_acc ->
@@ -66,8 +66,8 @@
                     [{:file, dirname ++ filename ++ '.log'}] ++ conf
                end
          Enum.map(conf_acc,
-                  fn([{:lager_file_backend, conf}]) ->
-                      [lager_file_backend: fun.(conf)]
+                  fn({:lager_file_backend, conf}) ->
+                      {:lager_file_backend, fun.(conf)}
                     (a) -> a
                   end)
       end,
@@ -77,8 +77,8 @@
                     [size: size] ++ conf
                end
          Enum.map(conf_acc,
-                  fn([{:lager_file_backend, conf}]) ->
-                      [lager_file_backend: fun.(conf)]
+                  fn({:lager_file_backend, conf}) ->
+                      {:lager_file_backend, fun.(conf)}
                     (a) -> a
                   end)
       end,
@@ -88,8 +88,8 @@
                     [date: date] ++ conf
                end
          Enum.map(conf_acc,
-                  fn([{:lager_file_backend, conf}]) ->
-                      [lager_file_backend: fun.(conf)]
+                  fn({:lager_file_backend, conf}) ->
+                      {:lager_file_backend, fun.(conf)}
                     (a) -> a
                   end)
       end,
@@ -99,8 +99,8 @@
                     [count: count] ++ conf
                end
          Enum.map(conf_acc,
-                  fn([{:lager_file_backend, conf}]) ->
-                      [lager_file_backend: fun.(conf)]
+                  fn({:lager_file_backend, conf}) ->
+                      {:lager_file_backend, fun.(conf)}
                     (a) -> a
                   end)
       end
