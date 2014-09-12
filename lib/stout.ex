@@ -84,6 +84,6 @@ defmodule Stout do
   end
 
   defp compile_truncation_size() do
-    Application.get_env(:stout, :truncation_size, 4096)
+    Application.get_env(:stout, :truncation_size, 8192)
   end
 end
