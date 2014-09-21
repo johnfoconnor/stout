@@ -7,12 +7,12 @@
     ],
     "lager.handlers.console.level": [
       to: "lager.handlers",
-      datatype: [enum: [:debug, :info, :error]],
+      datatype: [enum: [:debug, :info, :error, :warning]],
       default: :info
     ],
     "lager.handlers.files.level": [
       to: "lager.handlers",
-      datatype: [list: [enum: [:debug, :info, :error]]],
+      datatype: [list: [enum: [:debug, :info, :error, :warning]]],
       default: [
                 :error, :info, :debug
       ]
